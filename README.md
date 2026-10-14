@@ -1,4 +1,4 @@
-# Project_3_StatComputing
+# Project 3
 Project 3 for StatComputing Class at BSPH
 ## Project Breakdown 
 Instructions for the project can be found here: https://lcolladotor.github.io/jhustatcomputing/projects/project-3/
