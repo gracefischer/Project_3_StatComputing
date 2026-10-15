@@ -4,7 +4,7 @@ Project 3 for StatComputing Class at BSPH
 Instructions for the project can be found here: https://lcolladotor.github.io/jhustatcomputing/projects/project-3/
 
 ### Section 1: Explore album sales
-his section uses the TidyTuesday album sales data (September 2020) for Beyoncé and Taylor Swift to practice data wrangling with `stringr`, `lubridate`, and `forcats`, and data visualization with `ggplot2`.
+This section uses the TidyTuesday album sales data (September 2020) for Beyoncé and Taylor Swift to practice data wrangling with `stringr`, `lubridate`, and `forcats`, and data visualization with `ggplot2`.
 
 ### Part 1A: Data wrangling
 - Wrote a regular expression (`" \\([A-Z]+\\)\\[[0-9]+\\]"`) with `stringr::str_remove()` to remove footnote text such as `(US)[51]` from release dates, then converted `released` to a `Date` with `lubridate::mdy()`.
