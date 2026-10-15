@@ -3,7 +3,7 @@ Project 3 for StatComputing Class at BSPH
 ## Project Breakdown 
 Instructions for the project can be found here: https://lcolladotor.github.io/jhustatcomputing/projects/project-3/
 
-### Section 1: Explore album sales
+## Section 1: Explore album sales
 This section uses the TidyTuesday album sales data (September 2020) for Beyoncé and Taylor Swift to practice data wrangling with `stringr`, `lubridate`, and `forcats`, and data visualization with `ggplot2`.
 
 ### Part 1A: Data wrangling
@@ -28,4 +28,4 @@ This section uses the TidyTuesday album sales data (September 2020) for Beyoncé
 - Created a scatter plot of album sales by release date, colored by artist and faceted by country (UK, US, World) in rows.
 
 
-### Section 2: Exploring sentiment of lyrics
+## Section 2: Exploring sentiment of lyrics
