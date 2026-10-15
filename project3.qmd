@@ -1,0 +1,206 @@
+---
+title: "Project 3"
+author: "Grace Fischer"
+date: "10/25/26"
+format: 
+  html:
+    code-overflow: wrap
+---
+
+# Setting Up
+```{r}
+#| label: Set-Up
+#| warning: false
+#| echo: true
+
+## Load in dataset
+
+library("here")
+library("tidyverse")
+library("tidytuesdayR")
+
+if (!dir.exists(here("data"))) {
+    dir.create(here("data"))
+}
+
+b_lyrics <- readRDS(here("data", "b_lyrics.RDS"))
+ts_lyrics <- readRDS(here("data", "ts_lyrics.RDS"))
+sales <- readRDS(here("data", "sales.RDS"))
+
+rds_files <- c("b_lyrics.RDS", "ts_lyrics.RDS", "sales.RDS")
+## Check whether we have all 3 files
+if (any(!file.exists(here("data", rds_files)))) {
+    ## If we don't, then download the data
+    b_lyrics <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/beyonce_lyrics.csv")
+    ts_lyrics <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/taylor_swift_lyrics.csv")
+    sales <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/sales.csv")
+
+    ## Then save the data objects to RDS files
+    saveRDS(b_lyrics, file = here("data", "b_lyrics.RDS"))
+    saveRDS(ts_lyrics, file = here("data", "ts_lyrics.RDS"))
+    saveRDS(sales, file = here("data", "sales.RDS"))
+}
+```
+
+# Part 1: Explore Album Sales 
+## Part 1A: 
+```{r}
+#| label: Part 1A
+#| warning: false
+#| echo: true
+
+glimpse(sales)
+
+sales_tidy <- sales |>
+    ## Removes "extra stuff" from datesm then convert use stringr to get date (includes regular expression)
+    mutate(
+        released = str_remove(released, " \\([A-Z]+\\)\\[[0-9]+\\]"),
+        released = mdy(released)
+    ) |>
+    ## Use forcats to create a factor called country 
+    mutate(country = fct_collapse(country,
+        "World" = c("World", "WW"),
+        "FRA"   = c("FRA", "FR")
+    )) |>
+    ## Convert sales to album sales in millions of dollars.
+    mutate(sales = sales / 1000000) |>
+    ## Keep only album sales from the UK, the US or the World
+    filter(country %in% c("UK", "US", "World"))
+
+## Auto print your final wrangled tibble data frame.
+sales_tidy
+
+
+
+```
+
+## Part 1B: 
+```{r}
+#| label: Part 1B
+#| warning: false
+#| echo: true
+
+sales_us <- sales_tidy |>
+    ## Keep only US states
+    filter(country == "US") |>
+    ## Get release years and go to whole number (source below)
+    mutate(
+        years_since_release = floor(interval(released, today()) / years(1))
+    )
+
+sales_us
+
+## Group by Artist, summarizing by most recent, oldest, and median years since release by artist
+sales_us |>
+    group_by(artist) |>
+    summarize(
+        most_recent = min(years_since_release),
+        oldest      = max(years_since_release),
+        median      = median(years_since_release)
+    )
+```
+
+Sources I used to help me complete this: 
+
+https://lubridate.tidyverse.org/reference/interval.html
+
+https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Round
+
+## Part 1C 
+```{r}
+#| label: Part 1C
+#| warning: false
+#| echo: true
+
+## Get total album sales in millions by artist and country using Part 1A data
+total_sales <- sales_tidy |>
+    group_by(artist, country) |>
+    ## Added .groups = drops from error in console 
+    summarize(total_sales = sum(sales), .groups = "drop")
+total_sales
+
+##  Creating a percent stacked bar chart
+total_sales |>
+    ## Setting aes with x and y respectively, incorporating info for stacked bar chart 
+    ggplot(aes(x = artist, y = total_sales, fill = country)) +
+    geom_bar(position = "fill", stat = "identity") +
+    scale_y_continuous(labels = scales::percent) +
+    ## Settinf labels 
+    labs(
+        title = "Studio album sales by country",
+        subtitle = "Beyoncé vs. Taylor Swift (UK, US, and World)",
+        x = "Artist",
+        y = "Percentage of total album sales (millions)",
+        fill = "Country"
+    )
+```
+
+Sources I used to help me complete this: 
+
+https://r-graph-gallery.com/48-grouped-barplot-with-ggplot2
+
+https://ggplot2.tidyverse.org/reference/scale_continuous.html
+
+## Part 1D
+```{r}
+#| label: Part 1D
+#| warning: false
+#| echo: true
+
+## Data from 1A
+sales_tidy |>
+    ## Filtering for Wold 
+    filter(country == "World") |>
+    ## including forcats functions 
+    mutate(title = fct_reorder(title, sales)) |>
+    ## Creating chart 
+    ggplot(aes(x = sales, y = title, fill = artist)) +
+    geom_bar(stat = "identity") +
+    ## Creating labels 
+    labs(
+        title = "Worldwide sales of studio albums",
+        subtitle = "Albums organized by worldwide sales (in millions)\nfor Beyoncé and Taylor Swift",
+        x = "Album sales (millions)",
+        y = "Album title",
+        fill = "Artist"
+    ) + 
+    theme_classic(base_size = 12) + 
+    theme(plot.title = element_text(face = "bold"))
+
+```
+
+## Part 1E
+```{r}
+#| label: Part 1E
+#| warning: false
+#| echo: true
+
+## Data from Part 1A
+sales_tidy |>
+    ## Setting x, y, and color
+    ggplot(aes(x = released, y = sales, color = artist)) +
+    ## Setting point size
+    geom_point(size = 3) +
+    ## Using facet by rows (stacked)
+    facet_grid(country ~ .) +
+    scale_x_date(date_breaks = "1 year", date_labels = "%Y")+ 
+    ## Setting labels 
+    labs(
+        title = "Studio album sales by release date",
+        x = "Release date",
+        y = "Album sales (millions)",
+        color = "Artist"
+    ) +
+    theme_bw(base_size = 11) +
+    theme(
+        plot.title = element_text(face = "bold"),
+        axis.text.x = element_text(angle = 45, hjust = 1)
+        )
+```
+
+Sources I used to help me complete this: 
+
+https://ggplot2.tidyverse.org/reference/scale_date.html
+
+
+# Part 2
