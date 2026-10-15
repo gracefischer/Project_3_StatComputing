@@ -24,7 +24,7 @@ This section uses the TidyTuesday album sales data (September 2020) for Beyoncé
 - Filtered to worldwide sales and created a horizontal bar plot of sales for each album, colored by artist.
 - Ordered albums from most to least sales using `forcats::fct_reorder()`.
 
-## Part 1E: Sales over time
+### Part 1E: Sales over time
 - Created a scatter plot of album sales by release date, colored by artist and faceted by country (UK, US, World) in rows.
 
 
