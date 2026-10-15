@@ -203,4 +203,48 @@ Sources I used to help me complete this:
 https://ggplot2.tidyverse.org/reference/scale_date.html
 
 
-# Part 2
+# Part 2: Exploring sentiment of lyrics
+## Part 2A
+```{r}
+#| label: Part 2A
+#| warning: false
+#| echo: true
+
+
+```
+
+## Part 2B
+```{r}
+#| label: Part 2B
+#| warning: false
+#| echo: true
+
+
+```
+
+## Part 2C
+```{r}
+#| label: Part 2C
+#| warning: false
+#| echo: true
+
+
+```
+
+## Part 2D
+```{r}
+#| label: Part 2D
+#| warning: false
+#| echo: true
+
+
+```
+
+## Part 2E
+```{r}
+#| label: Part 2E
+#| warning: false
+#| echo: true
+
+
+```
