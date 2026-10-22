@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Grace Fischer">
+<meta name="dcterms.date" content="2026-10-25">
+
+<title>Project 3</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="project3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="project3_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="project3_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="project3_files/libs/quarto-html/popper.min.js"></script>
+<script src="project3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="project3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="project3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="project3_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="project3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="project3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="project3_files/libs/bootstrap/bootstrap-2c317c4a195c657ca93870d0b805367a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Project 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Grace Fischer </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 25, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="setting-up" class="level1">
+<h1>Setting Up</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load in dataset</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"here"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidytuesdayR"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="fu">here</span>(<span class="st">"data"</span>))) {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"data"</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>b_lyrics <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"b_lyrics.RDS"</span>))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ts_lyrics <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"ts_lyrics.RDS"</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>sales <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"sales.RDS"</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>rds_files <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"b_lyrics.RDS"</span>, <span class="st">"ts_lyrics.RDS"</span>, <span class="st">"sales.RDS"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Check whether we have all 3 files</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(<span class="sc">!</span><span class="fu">file.exists</span>(<span class="fu">here</span>(<span class="st">"data"</span>, rds_files)))) {</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="do">## If we don't, then download the data</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    b_lyrics <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/beyonce_lyrics.csv"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    ts_lyrics <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/taylor_swift_lyrics.csv"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    sales <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/sales.csv"</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Then save the data objects to RDS files</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(b_lyrics, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"b_lyrics.RDS"</span>))</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(ts_lyrics, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"ts_lyrics.RDS"</span>))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(sales, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"sales.RDS"</span>))</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Note: This code was taken directly from instructions, and rest of code is wrapped, HTML cant find break in the URL so its a scroll for this block only (sorry about that!)</p>
+</section>
+<section id="part-1-explore-album-sales" class="level1">
+<h1>Part 1: Explore Album Sales</h1>
+<section id="part-1a" class="level2">
+<h2 class="anchored" data-anchor-id="part-1a">Part 1A:</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 48
+Columns: 8
+$ artist     &lt;chr&gt; "Taylor Swift", "Taylor Swift", "Taylor Swift", "Taylor Swi…
+$ title      &lt;chr&gt; "Taylor Swift", "Fearless", "Fearless", "Fearless", "Fearle…
+$ country    &lt;chr&gt; "US", "WW", "US", "AUS", "UK", "WW", "US", "UK", "WW", "US"…
+$ sales      &lt;dbl&gt; 5720000, 12000000, 7180000, 500000, 609000, 5000000, 469400…
+$ released   &lt;chr&gt; "October 24, 2006", "November 11, 2008", "November 11, 2008…
+$ re_release &lt;chr&gt; "March 18, 2008[34]", "October 27, 2009[40]", "October 27, …
+$ label      &lt;chr&gt; "Big Machine", "Big Machine", "Big Machine", "Big Machine",…
+$ formats    &lt;chr&gt; "CD, CD+G (karaoke), DVD (karaoke), LP, digital download", …</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sales_tidy <span class="ot">&lt;-</span> sales <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Removes "extra stuff" from datesm then convert use stringr to get date (includes regular expression)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">released =</span> <span class="fu">str_remove</span>(released, <span class="st">" </span><span class="sc">\\</span><span class="st">([A-Z]+</span><span class="sc">\\</span><span class="st">)</span><span class="sc">\\</span><span class="st">[[0-9]+</span><span class="sc">\\</span><span class="st">]"</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">released =</span> <span class="fu">mdy</span>(released)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Use forcats to create a factor called country </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">fct_collapse</span>(country,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"World"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"World"</span>, <span class="st">"WW"</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"FRA"</span>   <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"FRA"</span>, <span class="st">"FR"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Convert sales to album sales in millions of dollars.</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sales =</span> sales <span class="sc">/</span> <span class="dv">1000000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Keep only album sales from the UK, the US or the World</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"UK"</span>, <span class="st">"US"</span>, <span class="st">"World"</span>))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Auto print your final wrangled tibble data frame.</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>sales_tidy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 36 × 8
+   artist       title        country  sales released   re_release  label formats
+   &lt;chr&gt;        &lt;chr&gt;        &lt;fct&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;  
+ 1 Taylor Swift Taylor Swift US       5.72  2006-10-24 March 18, … Big … CD, CD…
+ 2 Taylor Swift Fearless     World   12     2008-11-11 October 27… Big … CD, CD…
+ 3 Taylor Swift Fearless     US       7.18  2008-11-11 October 27… Big … CD, CD…
+ 4 Taylor Swift Fearless     UK       0.609 2008-11-11 October 27… Big … CD, CD…
+ 5 Taylor Swift Speak Now    World    5     2010-10-25 &lt;NA&gt;        Big … CD, CD…
+ 6 Taylor Swift Speak Now    US       4.69  2010-10-25 &lt;NA&gt;        Big … CD, CD…
+ 7 Taylor Swift Speak Now    UK       0.169 2010-10-25 &lt;NA&gt;        Big … CD, CD…
+ 8 Taylor Swift Red          World    6     2012-10-22 &lt;NA&gt;        Big … CD, CD…
+ 9 Taylor Swift Red          US       4.46  2012-10-22 &lt;NA&gt;        Big … CD, CD…
+10 Taylor Swift Red          UK       0.693 2012-10-22 &lt;NA&gt;        Big … CD, CD…
+# ℹ 26 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="part-1b" class="level2">
+<h2 class="anchored" data-anchor-id="part-1b">Part 1B:</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sales_us <span class="ot">&lt;-</span> sales_tidy <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Keep only US states</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"US"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Get release years and go to whole number (source below)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">years_since_release =</span> <span class="fu">floor</span>(<span class="fu">interval</span>(released, <span class="fu">today</span>()) <span class="sc">/</span> <span class="fu">years</span>(<span class="dv">1</span>))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>sales_us</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 9
+   artist       title          country sales released   re_release label formats
+   &lt;chr&gt;        &lt;chr&gt;          &lt;fct&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;  
+ 1 Taylor Swift Taylor Swift   US       5.72 2006-10-24 March 18,… Big … CD, CD…
+ 2 Taylor Swift Fearless       US       7.18 2008-11-11 October 2… Big … CD, CD…
+ 3 Taylor Swift Speak Now      US       4.69 2010-10-25 &lt;NA&gt;       Big … CD, CD…
+ 4 Taylor Swift Red            US       4.46 2012-10-22 &lt;NA&gt;       Big … CD, CD…
+ 5 Taylor Swift 1989           US       6.22 2014-10-27 &lt;NA&gt;       Big … CD, CD…
+ 6 Taylor Swift Reputation     US       2.3  2017-11-10 &lt;NA&gt;       Big … CD, CD…
+ 7 Taylor Swift Lover          US       1.08 2019-08-23 &lt;NA&gt;       Repu… CD, LP…
+ 8 Beyoncé      Dangerously i… US       5.1  2003-06-23 &lt;NA&gt;       Colu… CD, LP…
+ 9 Beyoncé      B'Day          US       3.61 2006-09-01 &lt;NA&gt;       Sony… CD, CD…
+10 Beyoncé      I Am... Sasha… US       3.38 2008-11-14 &lt;NA&gt;       Musi… CD, CD…
+11 Beyoncé      4              US       1.5  2011-06-24 &lt;NA&gt;       Park… CD, di…
+12 Beyoncé      Beyoncé        US       2.51 2013-12-13 &lt;NA&gt;       Park… CD, CD…
+13 Beyoncé      Lemonade       US       1.55 2016-04-23 &lt;NA&gt;       Park… CD/DVD…
+# ℹ 1 more variable: years_since_release &lt;dbl&gt;</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Group by Artist, summarizing by most recent, oldest, and median years since release by artist</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sales_us <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(artist) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">most_recent =</span> <span class="fu">min</span>(years_since_release),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">oldest      =</span> <span class="fu">max</span>(years_since_release),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">median      =</span> <span class="fu">median</span>(years_since_release)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  artist       most_recent oldest median
+  &lt;chr&gt;              &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 Beyoncé               10     23     16
+2 Taylor Swift           7     19     14</code></pre>
+</div>
+</div>
+<p>Sources I used to help me complete this:</p>
+<p>https://lubridate.tidyverse.org/reference/interval.html</p>
+<p>https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Round</p>
+</section>
+<section id="part-1c" class="level2">
+<h2 class="anchored" data-anchor-id="part-1c">Part 1C</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Get total album sales in millions by artist and country using Part 1A data</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>total_sales <span class="ot">&lt;-</span> sales_tidy <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(artist, country) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Added .groups = drops from error in console </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">total_sales =</span> <span class="fu">sum</span>(sales), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>total_sales</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  artist       country total_sales
+  &lt;chr&gt;        &lt;fct&gt;         &lt;dbl&gt;
+1 Beyoncé      UK             5.24
+2 Beyoncé      US            17.7 
+3 Beyoncé      World         34.5 
+4 Taylor Swift UK             3.32
+5 Taylor Swift US            31.7 
+6 Taylor Swift World         40.8 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">##  Creating a percent stacked bar chart</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>total_sales <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Setting aes with x and y respectively, incorporating info for stacked bar chart </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> artist, <span class="at">y =</span> total_sales, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Settinf labels </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Studio album sales by country"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Beyoncé vs. Taylor Swift (UK, US, and World)"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Artist"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Percentage of total album sales (millions)"</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">"Country"</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/Part%201C-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Sources I used to help me complete this:</p>
+<p>https://r-graph-gallery.com/48-grouped-barplot-with-ggplot2</p>
+<p>https://ggplot2.tidyverse.org/reference/scale_continuous.html</p>
+</section>
+<section id="part-1d" class="level2">
+<h2 class="anchored" data-anchor-id="part-1d">Part 1D</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Data from 1A</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sales_tidy <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Filtering for Wold </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"World"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="do">## including forcats functions </span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">title =</span> <span class="fu">fct_reorder</span>(title, sales)) <span class="sc">|&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Creating chart </span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sales, <span class="at">y =</span> title, <span class="at">fill =</span> artist)) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Creating labels </span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Worldwide sales of studio albums"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Albums organized by worldwide sales (in millions)</span><span class="sc">\n</span><span class="st">for Beyoncé and Taylor Swift"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Album sales (millions)"</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Album title"</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">"Artist"</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/Part%201D-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="part-1e" class="level2">
+<h2 class="anchored" data-anchor-id="part-1e">Part 1E</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Data from Part 1A</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sales_tidy <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Setting x, y, and color</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> released, <span class="at">y =</span> sales, <span class="at">color =</span> artist)) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Setting point size</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Using facet by rows (stacked)</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(country <span class="sc">~</span> .) <span class="sc">+</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"1 year"</span>, <span class="at">date_labels =</span> <span class="st">"%Y"</span>)<span class="sc">+</span> </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Setting labels </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Studio album sales by release date"</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Beyoncé vs. Taylor Swift, faceted by UK, US, and World"</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Release date"</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Album sales (millions)"</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"Artist"</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/Part%201E-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Sources I used to help me complete this:</p>
+<p>https://ggplot2.tidyverse.org/reference/scale_date.html</p>
+</section>
+</section>
+<section id="part-2-exploring-sentiment-of-lyrics" class="level1">
+<h1>Part 2: Exploring sentiment of lyrics</h1>
+<section id="part-2a" class="level2">
+<h2 class="anchored" data-anchor-id="part-2a">Part 2A</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidytext"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="do">## One row per lyric line (keeps Album, Title, etc.)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>ts_lines <span class="ot">&lt;-</span> ts_lyrics <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_tokens</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">output =</span> line,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">input =</span> Lyrics,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">token =</span> <span class="st">"lines"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Keeping original capitalization for display purposes </span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">to_lower =</span> <span class="cn">FALSE</span> </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Filtering for "hello"</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>ts_hello <span class="ot">&lt;-</span> ts_lines <span class="sc">%&gt;%</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(line, <span class="fu">regex</span>(<span class="st">"hello"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Getting nrow of hellow </span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>ts_hello <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  Artist       Album    Title                  line                             
+  &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;                  &lt;chr&gt;                            
+1 Taylor Swift Fearless Love Story             "And say, \"Hello\""             
+2 Taylor Swift Red      I Almost Do            "That I can't say \"Hello\" to y…
+3 Taylor Swift Red      Everything Has Changed "'Cause all I know is we said he…
+4 Taylor Swift Red      Everything Has Changed "'Cause all I know is we said he…
+5 Taylor Swift Red      Everything Has Changed "All I know is we said hello"    
+6 Taylor Swift Red      Everything Has Changed "All I know is we said hello"    </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(ts_hello)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Filtering for goodbye "goodbye"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ts_goodbye <span class="ot">&lt;-</span> ts_lines <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(line, <span class="fu">regex</span>(<span class="st">"goodbye"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Getting nrow of goodbye </span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>ts_goodbye <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 4
+   Artist       Album        Title                      line                    
+   &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;                      &lt;chr&gt;                   
+ 1 Taylor Swift Taylor Swift Tied Together With A Smile "Goodbye, baby"         
+ 2 Taylor Swift Speak Now    Mine                       "Braced myself for the …
+ 3 Taylor Swift Speak Now    Back to December           "You gave me all your l…
+ 4 Taylor Swift Speak Now    Long Live                  "And force us into a go…
+ 5 Taylor Swift Red          I Almost Do                "And risk another goodb…
+ 6 Taylor Swift Red          Come Back Be Here          "Stumbled through the l…
+ 7 Taylor Swift 1989         All You Had to Do Was Stay "But people like me are…
+ 8 Taylor Swift reputation   Getaway Car                "Said goodbye in "      
+ 9 Taylor Swift reputation   Getaway Car                "Said goodbye in "      
+10 Taylor Swift Lover        Death By A Thousand Cuts   "Saying goodbye is deat…
+11 Taylor Swift Lover        Death By A Thousand Cuts   "'Cause saying goodbye …
+12 Taylor Swift Lover        Daylight                   "I'll tell you truth, b…</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(ts_goodbye)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Print line </span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"There are"</span>, <span class="fu">nrow</span>(ts_hello), <span class="st">"lines with </span><span class="sc">\"</span><span class="st">hello</span><span class="sc">\"</span><span class="st"> and"</span>, <span class="fu">nrow</span>(ts_goodbye), <span class="st">"lines with </span><span class="sc">\"</span><span class="st">goodbye</span><span class="sc">\"</span><span class="st"> in ts_lyrics."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>There are 6 lines with "hello" and 12 lines with "goodbye" in ts_lyrics.</code></pre>
+</div>
+</div>
+</section>
+<section id="part-2b" class="level2">
+<h2 class="anchored" data-anchor-id="part-2b">Part 2B</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Beyonce data already has one row per line, so we do not need to use unnest_tokens like we did above for ts_lyrics</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Filtering for "hello"</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>b_hello <span class="ot">&lt;-</span> b_lyrics <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(line, <span class="fu">regex</span>(<span class="st">"hello"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Getting nrow for hello</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>b_hello <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 91 × 6
+   line                        song_id song_name artist_id artist_name song_line
+   &lt;chr&gt;                         &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;
+ 1 Hello world, well I just b… 2220711 "Dreamgi…       498 Beyoncé             5
+ 2 Hello Stevie, How you feel… 1981227 "Fingert…       498 Beyoncé             6
+ 3 Fellow great Americans, he… 2715227 "FREEDOM…       498 Beyoncé            52
+ 4 You had me at hello (Hello)   80249 "Hello"         498 Beyoncé            15
+ 5 Hello (Hello)                 80249 "Hello"         498 Beyoncé            16
+ 6 Hello (Hello)                 80249 "Hello"         498 Beyoncé            17
+ 7 You had me at hello (Hello)   80249 "Hello"         498 Beyoncé            18
+ 8 Hello (Hello)                 80249 "Hello"         498 Beyoncé            19
+ 9 Hello (Hello)                 80249 "Hello"         498 Beyoncé            20
+10 'Cause you had me at hello…   80249 "Hello"         498 Beyoncé            24
+11 Hello (Hello)                 80249 "Hello"         498 Beyoncé            25
+12 Hello (Hello)                 80249 "Hello"         498 Beyoncé            26
+13 You had me at hello (Hello)   80249 "Hello"         498 Beyoncé            41
+14 Hello (Hello)                 80249 "Hello"         498 Beyoncé            42
+15 Hello (Hello)                 80249 "Hello"         498 Beyoncé            43
+16 You had me at hello (Hello)   80249 "Hello"         498 Beyoncé            44
+17 Hello (Hello)                 80249 "Hello"         498 Beyoncé            45
+18 Hello (Hello)                 80249 "Hello"         498 Beyoncé            46
+19 You had me at hello (Hello)   80249 "Hello"         498 Beyoncé            50
+20 Hello (Hello)                 80249 "Hello"         498 Beyoncé            51
+21 Hello (Hello, hello)          80249 "Hello"         498 Beyoncé            52
+22 You had me at hello (Hello)   80249 "Hello"         498 Beyoncé            62
+23 Hello (Hello)                 80249 "Hello"         498 Beyoncé            63
+24 Hello (Hello)                 80249 "Hello"         498 Beyoncé            64
+25 You had me at hello (Hello)   80249 "Hello"         498 Beyoncé            65
+26 Hello (Hello)                 80249 "Hello"         498 Beyoncé            66
+27 Hello (Hello)                 80249 "Hello"         498 Beyoncé            67
+28 You had me at hello (Hello)   80249 "Hello"         498 Beyoncé            71
+29 Hello (Hello)                 80249 "Hello"         498 Beyoncé            72
+30 Hello (Hello)                 80249 "Hello"         498 Beyoncé            73
+31 You had me at hello           80249 "Hello"         498 Beyoncé            77
+32 Hello                         80249 "Hello"         498 Beyoncé            78
+33 Hello                         80249 "Hello"         498 Beyoncé            79
+34 Hello                         80249 "Hello"         498 Beyoncé            80
+35 You had me at hello (Hello) 4585886 "Hello (…       498 Beyoncé            14
+36 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            15
+37 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            16
+38 You had me at hello (Hello) 4585886 "Hello (…       498 Beyoncé            17
+39 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            18
+40 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            19
+41 'Cause you had me at hello… 4585886 "Hello (…       498 Beyoncé            23
+42 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            24
+43 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            25
+44 You had me at hello (Hello) 4585886 "Hello (…       498 Beyoncé            39
+45 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            40
+46 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            41
+47 You had me at hello (Hello) 4585886 "Hello (…       498 Beyoncé            42
+48 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            43
+49 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            44
+50 You had me at hello (Hello) 4585886 "Hello (…       498 Beyoncé            48
+51 Hello (Hello)               4585886 "Hello (…       498 Beyoncé            49
+52 Hello (Hello, hello)        4585886 "Hello (…       498 Beyoncé            50
+53 Hello                       2181490 "Intro -…       498 Beyoncé             1
+54 You had me at hello (Hello) 2181490 "Intro -…       498 Beyoncé            18
+55 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            19
+56 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            20
+57 You had me at hello (Hello) 2181490 "Intro -…       498 Beyoncé            21
+58 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            22
+59 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            23
+60 Cuz you had me at hello (H… 2181490 "Intro -…       498 Beyoncé            26
+61 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            27
+62 Hello oooooh                2181490 "Intro -…       498 Beyoncé            28
+63 You had me at hello (Hello) 2181490 "Intro -…       498 Beyoncé            43
+64 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            44
+65 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            45
+66 You had me at hello (Hello) 2181490 "Intro -…       498 Beyoncé            46
+67 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            47
+68 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            48
+69 You had me at hello (Hello) 2181490 "Intro -…       498 Beyoncé            51
+70 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            52
+71 Hello oooooh                2181490 "Intro -…       498 Beyoncé            53
+72 You had me at hello (Hello) 2181490 "Intro -…       498 Beyoncé            63
+73 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            64
+74 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            65
+75 You had me at hello (Hello) 2181490 "Intro -…       498 Beyoncé            66
+76 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            67
+77 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            68
+78 You had me at hello (Hello) 2181490 "Intro -…       498 Beyoncé            71
+79 Hello (Hello)               2181490 "Intro -…       498 Beyoncé            72
+80 Hello oooooh                2181490 "Intro -…       498 Beyoncé            73
+81 You had me at hello         2181490 "Intro -…       498 Beyoncé            76
+82 Hello                       2181490 "Intro -…       498 Beyoncé            77
+83 Hello ooooohuuu             2181490 "Intro -…       498 Beyoncé            78
+84 Hello!                       299325 "Partiti…       498 Beyoncé            79
+85 Hello!                       299325 "Partiti…       498 Beyoncé            91
+86 Hello                       4481722 "Partiti…       498 Beyoncé            28
+87 Hello                       4481722 "Partiti…       498 Beyoncé            31
+88 Hello                       5838113 "Partiti…       498 Beyoncé            69
+89 Bye-bye sadness, hello mel… 1848669 "So Amaz…       498 Beyoncé            12
+90 You said hello to me         141848 "Yes"           498 Beyoncé            21
+91 I said hello to you          141848 "Yes"           498 Beyoncé            22</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(b_hello)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 91</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering for "goodbye"</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>b_goodbye <span class="ot">&lt;-</span> b_lyrics <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(line, <span class="fu">regex</span>(<span class="st">"goodbye"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Getting nrow for goodbye </span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>b_goodbye <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 6
+   line                        song_id song_name artist_id artist_name song_line
+   &lt;chr&gt;                         &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;
+ 1 We only said goodbye with …  139043 Back to …       498 Beyoncé            12
+ 2 We only said goodbye with …  139043 Back to …       498 Beyoncé            21
+ 3 We only said goodbye with …  139043 Back to …       498 Beyoncé            24
+ 4 Thank God, I found the goo…   51492 Best Thi…       498 Beyoncé            38
+ 5 Thank God, I found the goo… 1946060 Best Thi…       498 Beyoncé            42
+ 6 Thank God, I found the goo… 4241137 Best Thi…       498 Beyoncé            38
+ 7 It's so hard to say goodbye  435491 Gift fro…       498 Beyoncé            23
+ 8 I never want to say goodbye  435491 Gift fro…       498 Beyoncé            24
+ 9 I never, ever want to say …  435491 Gift fro…       498 Beyoncé            25
+10 We've got to say goodbye    1844620 Hard To …       498 Beyoncé            29
+11 Don't have to say goodbye   1224115 Slow Love       498 Beyoncé            42
+12 Somewhere between hi and g…  141848 Yes             498 Beyoncé            27</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(b_goodbye)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Print line </span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"There are"</span>, <span class="fu">nrow</span>(b_hello), <span class="st">"lines containing </span><span class="sc">\"</span><span class="st">hello</span><span class="sc">\"</span><span class="st"> and"</span>, <span class="fu">nrow</span>(b_goodbye), <span class="st">"lines containing </span><span class="sc">\"</span><span class="st">goodbye</span><span class="sc">\"</span><span class="st">."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>There are 91 lines containing "hello" and 12 lines containing "goodbye".</code></pre>
+</div>
+</div>
+</section>
+<section id="part-2c" class="level2">
+<h2 class="anchored" data-anchor-id="part-2c">Part 2C</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>?wordcloud</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Completing numbers 1-7</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>b_top25 <span class="ot">&lt;-</span> b_lyrics <span class="sc">%&gt;%</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 1. One word per row </span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_tokens</span>(<span class="at">output =</span> word, <span class="at">input =</span> line, <span class="at">token =</span> <span class="st">"words"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 2. Removing stop words </span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">%&gt;%</span>                           </span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 3. Calculate the total number for each word in the lyrics</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(word) <span class="sc">%&gt;%</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 4. Add column with Bing sentiment </span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">"bing"</span>), <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 5. Sort the rows from most frequent to least frequent words</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span>                                 </span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 6. Top 25 most frequent words</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">25</span>)</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 7. Auto print the wrangled tibble data frame</span></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>b_top25                                                              </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25 × 3
+   word          n sentiment
+   &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;    
+ 1 love       1362 positive 
+ 2 crazy       308 negative 
+ 3 top         241 positive 
+ 4 bad         132 negative 
+ 5 beautiful   131 positive 
+ 6 whoa        121 positive 
+ 7 damn        106 negative 
+ 8 hurt         90 negative 
+ 9 hard         87 negative 
+10 ready        85 positive 
+# ℹ 15 more rows</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Creating the bar plot</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>b_top25 <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">fct_reorder</span>(word, n)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="do">## GGplot using aes setting x and y respectively </span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> word, <span class="at">fill =</span> sentiment)) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Source for this below ; I decided to add so we can see exact values since x range is so vast </span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> n), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Setting labels </span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Top 25 sentiment words in Beyoncé's lyrics"</span>,</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Stopwords removed (sentiment from the bing lexicon)"</span>,</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Frequency (number of times the word appears)"</span>,</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Word"</span>,</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">"Bing sentiment"</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/Part%202C-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 9: word cloud in seperate chunk for fig cap </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 9: word cloud </span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>b_top25 <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">with</span>(<span class="fu">wordcloud</span>(word, n, <span class="at">max.words =</span> <span class="dv">25</span>, <span class="at">random.order =</span> <span class="cn">FALSE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="project3_files/figure-html/Part%202C%20word%20cloud-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Word cloud of the top 25 sentiment words in Beyoncé’s lyrics</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Sources I used to help me complete this:</p>
+<p>https://www.rdocumentation.org/packages/wordcloud/versions/2.6/topics/wordcloud</p>
+<p>https://ggplot2.tidyverse.org/reference/geom_text.html</p>
+<p>https://quarto.org/docs/authoring/figures.html</p>
+</section>
+<section id="part-2d" class="level2">
+<h2 class="anchored" data-anchor-id="part-2d">Part 2D</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Completing numbers 1-7</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>ts_top25 <span class="ot">&lt;-</span> ts_lines <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 1. One word per row (ts_lines from Part 2A has one lyric line per row)</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_tokens</span>(<span class="at">output =</span> word, <span class="at">input =</span> line, <span class="at">token =</span> <span class="st">"words"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 2. Removing stop words</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 3. Calculate the total number for each word in the lyrics</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(word) <span class="sc">%&gt;%</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 4. Add column with Bing sentiment</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">"bing"</span>), <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 5. Sort the rows from most frequent to least frequent words</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 6. Top 25 most frequent words</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">25</span>)</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 7. Auto print the wrangled tibble data frame</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>ts_top25</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25 × 3
+   word          n sentiment
+   &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;    
+ 1 love        248 positive 
+ 2 bad          80 negative 
+ 3 shake        73 negative 
+ 4 break        59 negative 
+ 5 mad          48 negative 
+ 6 beautiful    46 positive 
+ 7 smile        45 positive 
+ 8 hate         44 negative 
+ 9 fall         43 negative 
+10 whoa         36 positive 
+# ℹ 15 more rows</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Creating the bar plot</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>ts_top25 <span class="sc">%&gt;%</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">fct_reorder</span>(word, n)) <span class="sc">%&gt;%</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="do">## ggplot using aes setting x and y respectively</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> word, <span class="at">fill =</span> sentiment)) <span class="sc">+</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Adding counts at the end of each bar (geom_text, ggplot2 documentation)</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> n), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Setting labels</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Top 25 sentiment words in Taylor Swift's lyrics"</span>,</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Stopwords removed (sentiment from the bing lexicon)"</span>,</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Frequency (number of times the word appears)"</span>,</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Word"</span>,</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">"Bing sentiment"</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/Part%202D-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 9: word cloud in seperate chunk for fig cap </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 9: word cloud </span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>ts_top25 <span class="sc">%&gt;%</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">with</span>(<span class="fu">wordcloud</span>(word, n, <span class="at">max.words =</span> <span class="dv">25</span>, <span class="at">random.order =</span> <span class="cn">FALSE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="project3_files/figure-html/Part%202D%20word%20cloud-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Word cloud of the top 25 sentiment words in TS’s lyrics</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Sources I used to help me complete this are same for Part 2C.</p>
+</section>
+<section id="part-2e" class="level2">
+<h2 class="anchored" data-anchor-id="part-2e">Part 2E</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Ran tidytext::get_sentiments("afinn") in console </span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Completing Parts 1-6 </span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>ts_album_sentiment <span class="ot">&lt;-</span> ts_lyrics <span class="sc">%&gt;%</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Clean album names (remove white space at end) so they match the sales data (source below)</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Album =</span> <span class="fu">str_to_title</span>(<span class="fu">str_trim</span>(Album))) <span class="sc">%&gt;%</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 1. One word per row</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_tokens</span>(<span class="at">output =</span> word, <span class="at">input =</span> Lyrics, <span class="at">token =</span> <span class="st">"words"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 2. Removing stop words</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 3. Calculate the total number for each word in the lyrics for each Album</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(Album, word) <span class="sc">%&gt;%</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 4. Add column with afinn sentiment score </span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">"afinn"</span>), <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 5. Calculate the average sentiment score for each album, weighted by how often each word appears</span></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Album) <span class="sc">%&gt;%</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">avg_sentiment =</span> <span class="fu">sum</span>(value <span class="sc">*</span> n) <span class="sc">/</span> <span class="fu">sum</span>(n))</span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 6. Auto print</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>ts_album_sentiment</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  Album        avg_sentiment
+  &lt;chr&gt;                &lt;dbl&gt;
+1 1989               -0.215 
+2 Fearless            0.452 
+3 Folklore           -0.396 
+4 Lover               0.0960
+5 Red                 0.256 
+6 Reputation          0.0501
+7 Speak Now           0.0219
+8 Taylor Swift        0.646 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 7. Join with Part 1A US sales</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>ts_sentiment_sales <span class="ot">&lt;-</span> sales_tidy <span class="sc">%&gt;%</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(artist <span class="sc">==</span> <span class="st">"Taylor Swift"</span>, country <span class="sc">==</span> <span class="st">"US"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(ts_album_sentiment, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"title"</span> <span class="ot">=</span> <span class="st">"Album"</span>))</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>ts_sentiment_sales</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 9
+  artist   title country sales released   re_release label formats avg_sentiment
+  &lt;chr&gt;    &lt;chr&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;
+1 Taylor … Tayl… US       5.72 2006-10-24 March 18,… Big … CD, CD…        0.646 
+2 Taylor … Fear… US       7.18 2008-11-11 October 2… Big … CD, CD…        0.452 
+3 Taylor … Spea… US       4.69 2010-10-25 &lt;NA&gt;       Big … CD, CD…        0.0219
+4 Taylor … Red   US       4.46 2012-10-22 &lt;NA&gt;       Big … CD, CD…        0.256 
+5 Taylor … 1989  US       6.22 2014-10-27 &lt;NA&gt;       Big … CD, CD…       -0.215 
+6 Taylor … Repu… US       2.3  2017-11-10 &lt;NA&gt;       Big … CD, CD…        0.0501
+7 Taylor … Lover US       1.08 2019-08-23 &lt;NA&gt;       Repu… CD, LP…        0.0960</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 8-10. Scatter plot</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>ts_sentiment_sales <span class="sc">%&gt;%</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> released, <span class="at">y =</span> avg_sentiment)) <span class="sc">+</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> sales), <span class="at">color =</span> <span class="st">"hotpink"</span>) <span class="sc">+</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 9. Horizontal line at 0 (neutral sentiment) SOurce below </span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>) <span class="sc">+</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Album names above each point (source same as above parts)</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> title), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Adding labels to the graph </span></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Sentiment of Taylor Swift's albums over time"</span>,</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Average afinn sentiment score per album (stopwords removed)"</span>,</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Point size = US sales"</span>,</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Album release date"</span>,</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Average sentiment score (afinn scale, -5 to 5)"</span>,</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="st">"US sales (in millions)"</span></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/Part%202E-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Sources I used to help me complete this: https://www.rdocumentation.org/packages/ggplot2/versions/0.9.1/topics/geom_hline</p>
+<p>https://www.rdocumentation.org/packages/stringr/versions/1.6.0/topics/str_trim</p>
+<ol start="10" type="1">
+<li>Taylor Swift’s albums have decreased in sentiment over time. Her first two albums (Taylor Swift and Fearless) have the highest average sentiment scores. The albums following that have had a relatively neutral sentiment score, except for 1989 which is negative. One could argue that Red has a slightly higher score, but it is still only around 0.25 on the graph. We can also see how sentiment does not necessarily track sales. 1989, having the lowest sentiment score was one of her best-selling albums, as was Fearless which had one of the highest scores.</li>
+</ol>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

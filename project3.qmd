@@ -42,6 +42,8 @@ if (any(!file.exists(here("data", rds_files)))) {
 }
 ```
 
+Note: This code was taken directly from instructions, and rest of code is wrapped, HTML cant find break in the URL so its a scroll for this block only (sorry about that!)
+
 # Part 1: Explore Album Sales 
 ## Part 1A: 
 ```{r}
@@ -319,9 +321,9 @@ b_top25 %>%
 ```
 
 ```{r}
-   #| label: Part 2C word cloud
-   #| echo: true
-   #| fig-cap: "Word cloud of the top 25 sentiment words in Beyoncé's lyrics"
+#| label: Part 2C word cloud
+#| echo: true
+#| fig-cap: "Word cloud of the top 25 sentiment words in Beyoncé's lyrics"
    
 # Step 9: word cloud 
 set.seed(1000)
@@ -385,9 +387,9 @@ ts_top25 %>%
 ```
 
 ```{r}
-   #| label: Part 2D word cloud
-   #| echo: true
-   #| fig-cap: "Word cloud of the top 25 sentiment words in TS's lyrics"
+#| label: Part 2D word cloud
+#| echo: true
+#| fig-cap: "Word cloud of the top 25 sentiment words in TS's lyrics"
 
 # Step 9: word cloud 
 set.seed(1000)
