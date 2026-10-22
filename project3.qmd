@@ -209,8 +209,36 @@ https://ggplot2.tidyverse.org/reference/scale_date.html
 #| label: Part 2A
 #| warning: false
 #| echo: true
+library("tidytext")
 
+## One row per lyric line (keeps Album, Title, etc.)
+ts_lines <- ts_lyrics %>%
+    unnest_tokens(
+        output = line,
+        input = Lyrics,
+        token = "lines",
+        ## Keeping original capitalization for display purposes 
+        to_lower = FALSE 
+    )
 
+## Filtering for "hello"
+ts_hello <- ts_lines %>%
+    filter(str_detect(line, regex("hello", ignore_case = TRUE)))
+
+## Getting nrow of hellow 
+ts_hello %>% print(n = Inf)
+nrow(ts_hello)
+
+## Filtering for goodbye "goodbye"
+ts_goodbye <- ts_lines %>%
+    filter(str_detect(line, regex("goodbye", ignore_case = TRUE)))
+
+## Getting nrow of goodbye 
+ts_goodbye %>% print(n = Inf)
+nrow(ts_goodbye)
+
+## Print line 
+cat("There are", nrow(ts_hello), "lines with \"hello\" and", nrow(ts_goodbye), "lines with \"goodbye\" in ts_lyrics.")
 ```
 
 ## Part 2B
@@ -219,7 +247,26 @@ https://ggplot2.tidyverse.org/reference/scale_date.html
 #| warning: false
 #| echo: true
 
+## Beyonce data already has one row per line, so we do not need to use unnest_tokens like we did above for ts_lyrics
 
+## Filtering for "hello"
+b_hello <- b_lyrics %>%
+    filter(str_detect(line, regex("hello", ignore_case = TRUE)))
+
+## Getting nrow for hello
+b_hello %>% print(n = Inf)
+nrow(b_hello)
+
+# Filtering for "goodbye"
+b_goodbye <- b_lyrics %>%
+    filter(str_detect(line, regex("goodbye", ignore_case = TRUE)))
+
+## Getting nrow for goodbye 
+b_goodbye %>% print(n = Inf)
+nrow(b_goodbye)
+
+## Print line 
+cat("There are", nrow(b_hello), "lines containing \"hello\" and", nrow(b_goodbye), "lines containing \"goodbye\".")
 ```
 
 ## Part 2C
@@ -227,9 +274,59 @@ https://ggplot2.tidyverse.org/reference/scale_date.html
 #| label: Part 2C
 #| warning: false
 #| echo: true
+library(wordcloud)
+?wordcloud
 
+## Completing numbers 1-7
+b_top25 <- b_lyrics %>%
+    ## 1. One word per row 
+    unnest_tokens(output = word, input = line, token = "words") %>% 
+    ## 2. Removing stop words 
+    anti_join(stop_words, by = "word") %>%                           
+    ## 3. Calculate the total number for each word in the lyrics
+    count(word) %>%                                                   # 3. total per word (column n)
+    ## 4. Add column with Bing sentiment 
+    inner_join(get_sentiments("bing"), by = "word") %>%               # 4. add bing sentiment
+    ## 5. Sort the rows from most frequent to least frequent words
+    arrange(desc(n)) %>%                                             
+    ## 6. Top 25 most frequent words
+    slice_head(n = 25)                                                
+
+## 7. Auto print the wrangled tibble data frame
+b_top25                                                              
+
+## Creating the bar plot
+b_top25 %>%
+    mutate(word = fct_reorder(word, n)) %>%
+    ## GGplot using aes setting x and y respectively 
+    ggplot(aes(x = n, y = word, fill = sentiment)) +
+    geom_col() +
+    ## Source for this below ; I decided to add so we can see exact values since x range is so vast 
+    geom_text(aes(label = n), hjust = -0.2, size = 2) +
+    ## Setting labels 
+    labs(
+        title = "Top 25 sentiment words in Beyoncé's lyrics",
+        subtitle = "Stopwords removed (sentiment from the bing lexicon)",
+        x = "Frequency (number of times the word appears)",
+        y = "Word",
+        fill = "Bing sentiment"
+    ) +
+    theme_minimal()+
+    theme(plot.title = element_text(face = "bold"))
+
+# Step 9: word cloud
+set.seed(1000)
+## Source for Random Order below 
+b_top25 %>%
+    with(wordcloud(word, n, max.words = 25, random.order = FALSE))
 
 ```
+
+Sources I used to help me complete this: 
+
+https://www.rdocumentation.org/packages/modelwordcloud/versions/0.1/topics/wordcloud 
+
+https://ggplot2.tidyverse.org/reference/geom_text.html
 
 ## Part 2D
 ```{r}
@@ -237,14 +334,111 @@ https://ggplot2.tidyverse.org/reference/scale_date.html
 #| warning: false
 #| echo: true
 
+## Completing numbers 1-7
+ts_top25 <- ts_lines %>%
+    ## 1. One word per row (ts_lines from Part 2A has one lyric line per row)
+    unnest_tokens(output = word, input = line, token = "words") %>%
+    ## 2. Removing stop words
+    anti_join(stop_words, by = "word") %>%
+    ## 3. Calculate the total number for each word in the lyrics
+    count(word) %>%
+    ## 4. Add column with Bing sentiment
+    inner_join(get_sentiments("bing"), by = "word") %>%
+    ## 5. Sort the rows from most frequent to least frequent words
+    arrange(desc(n)) %>%
+    ## 6. Top 25 most frequent words
+    slice_head(n = 25)
 
+## 7. Auto print the wrangled tibble data frame
+ts_top25
+
+## Creating the bar plot
+ts_top25 %>%
+    mutate(word = fct_reorder(word, n)) %>%
+    ## ggplot using aes setting x and y respectively
+    ggplot(aes(x = n, y = word, fill = sentiment)) +
+    geom_col() +
+    ## Adding counts at the end of each bar (geom_text, ggplot2 documentation)
+    geom_text(aes(label = n), hjust = -0.2, size = 2) +
+    ## Extra space on the right so the longest bar's label isn't cut off
+    scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
+    ## Setting labels
+    labs(
+        title = "Top 25 sentiment words in Taylor Swift's lyrics",
+        subtitle = "Stopwords removed (sentiment from the bing lexicon)",
+        x = "Frequency (number of times the word appears)",
+        y = "Word",
+        fill = "Bing sentiment"
+    ) +
+    theme_minimal()+
+    theme(plot.title = element_text(face = "bold"))
+
+## Word cloud of the top 25 words
+set.seed(1000)
+ts_top25 %>%
+    with(wordcloud(word, n, max.words = 25, random.order = FALSE))
 ```
 
+Sources I used to help me complete this are same for Part 2C.
 ## Part 2E
 ```{r}
 #| label: Part 2E
 #| warning: false
 #| echo: true
 
+## Ran tidytext::get_sentiments("afinn") in console 
+
+## Completing Parts 1-6 
+ts_album_sentiment <- ts_lyrics %>%
+    ## Clean album names (remove white space at end) so they match the sales data (source below)
+    mutate(Album = str_to_title(str_trim(Album))) %>%
+    ## 1. One word per row
+    unnest_tokens(output = word, input = Lyrics, token = "words") %>%
+    ## 2. Removing stop words
+    anti_join(stop_words, by = "word") %>%
+    ## 3. Calculate the total number for each word in the lyrics for each Album
+    count(Album, word) %>%
+    ## 4. Add column with afinn sentiment score 
+    inner_join(get_sentiments("afinn"), by = "word") %>%
+    ## 5. Calculate the average sentiment score for each album, weighted by how often each word appears
+    group_by(Album) %>%
+    summarize(avg_sentiment = sum(value * n) / sum(n))
+
+## 6. Auto print
+ts_album_sentiment
+
+## 7. Join with Part 1A US sales
+ts_sentiment_sales <- sales_tidy %>%
+    filter(artist == "Taylor Swift", country == "US") %>%
+    inner_join(ts_album_sentiment, by = c("title" = "Album"))
+
+ts_sentiment_sales
+
+## 8-10. Scatter plot
+ts_sentiment_sales %>%
+    ggplot(aes(x = released, y = avg_sentiment)) +
+    geom_point(aes(size = sales), color = "hotpink") +
+    ## 9. Horizontal line at 0 (neutral sentiment) SOurce below 
+    geom_hline(yintercept = 0, linetype = "solid") +
+    ## Album names above each point (source same as above parts)
+    geom_text(aes(label = title), vjust = -1.5, size = 3) +
+    ## Adding labels to the graph 
+    labs(
+        title = "Sentiment of Taylor Swift's albums over time",
+        subtitle = "Average afinn sentiment score per album (stopwords removed)",
+        caption = "Point size = US sales",
+        x = "Album release date",
+        y = "Average sentiment score (afinn scale, -5 to 5)",
+        size = "US sales (in millions)"
+    ) +
+    theme_minimal() +
+    theme(plot.title = element_text(face = "bold"))
 
 ```
+
+Sources I used to help me complete this: 
+https://www.rdocumentation.org/packages/ggplot2/versions/0.9.1/topics/geom_hline
+
+https://www.rdocumentation.org/packages/stringr/versions/1.6.0/topics/str_trim
+
+10. Taylor Swift's albums have decreased in sentiment over time. Her first two albums (Taylor Swift and Fearless) have the highest average sentiment scores. The albums following that have had a relatively neutral sentiment score, except for 1989 which is negative. One could argue that Red has a slightly higher score, but it is still only around 0.25 on the graph. We can also see how sentiment does not necessarily track sales. 1989, having the lowest sentiment score was one of her best-selling albums, as was Fearless which had one of the highest scores. 
