@@ -317,7 +317,7 @@ b_top25 %>%
     theme_minimal()+
     theme(plot.title = element_text(face = "bold"))
 
-# Step 9: word cloud in seperate chunk for fig cap 
+# Step 9: word cloud in seperate chunk for fig cap (Source Below)
 ```
 
 ```{r}
