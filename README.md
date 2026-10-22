@@ -29,3 +29,28 @@ This section uses the TidyTuesday album sales data (September 2020) for Beyoncé
 
 
 ## Section 2: Exploring sentiment of lyrics
+This section uses the Beyoncé and Taylor Swift lyrics datasets to practice text analysis with `tidytext`, including tokenizing text, removing stopwords, and sentiment analysis with the "bing" and "afinn" lexicons.
+
+### Part 2A: "hello" and "goodbye" in Taylor Swift's lyrics
+- Split each song in `ts_lyrics` into one row per lyric line with `tidytext::unnest_tokens(token = "lines")`, creating a new `line` column.
+- Used `stringr::str_detect()` with `regex(ignore_case = TRUE)` to find lines containing "hello" (6 lines) and "goodbye" (12 lines), and printed all matching rows with `print(n = Inf)`.
+
+### Part 2B: "hello" and "goodbye" in Beyoncé's lyrics
+- Repeated Part 2A for `b_lyrics`, which already has one row per line, so no tokenizing step was needed.
+- Found 91 lines containing "hello" and 12 containing "goodbye". The high "hello" count comes mostly from the song *Hello* and its live versions.
+
+### Part 2C: Top sentiment words in Beyoncé's lyrics
+- Tokenized lyrics into words, removed stopwords with `anti_join(stop_words)`, counted each word, and added "bing" sentiment with `inner_join()`.
+- Kept the 25 most frequent words that have a bing sentiment.
+- Created a bar plot of word frequency colored by sentiment, with counts labeled at the end of each bar, and a word cloud with the `wordcloud` package.
+
+### Part 2D: Top sentiment words in Taylor Swift's lyrics
+- Repeated Part 2C for Taylor Swift's lyrics, starting from the line-level data created in Part 2A.
+
+### Part 2E: Taylor Swift's album sentiment over time
+- Counted words by album and added "afinn" sentiment scores (-5 to 5).
+- Calculated each album's average sentiment, weighted by how often each word appears.
+- Cleaned album names with `stringr::str_trim()` and `str_to_title()` so they matched the sales data, then joined with US sales from Part 1A. *folklore* was dropped because the sales data has no US sales for it.
+- Created a scatter plot of average sentiment by release date, sized by US sales in millions, with a horizontal line at 0 (neutral sentiment).
+- Found that her earliest albums are the most positive, while later albums are close to neutral, and *1989* is the only album with a negative average.
+- Note: the afinn lexicon must be downloaded once through the `textdata` package before rendering.
