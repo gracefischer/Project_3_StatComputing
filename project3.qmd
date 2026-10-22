@@ -187,6 +187,7 @@ sales_tidy |>
     ## Setting labels 
     labs(
         title = "Studio album sales by release date",
+        subtitle = "Beyoncé vs. Taylor Swift, faceted by UK, US, and World",
         x = "Release date",
         y = "Album sales (millions)",
         color = "Artist"
@@ -284,13 +285,13 @@ b_top25 <- b_lyrics %>%
     ## 2. Removing stop words 
     anti_join(stop_words, by = "word") %>%                           
     ## 3. Calculate the total number for each word in the lyrics
-    count(word) %>%                                                   # 3. total per word (column n)
+    count(word) %>%
     ## 4. Add column with Bing sentiment 
-    inner_join(get_sentiments("bing"), by = "word") %>%               # 4. add bing sentiment
+    inner_join(get_sentiments("bing"), by = "word") %>% 
     ## 5. Sort the rows from most frequent to least frequent words
-    arrange(desc(n)) %>%                                             
+    arrange(desc(n)) %>%                                 
     ## 6. Top 25 most frequent words
-    slice_head(n = 25)                                                
+    slice_head(n = 25)
 
 ## 7. Auto print the wrangled tibble data frame
 b_top25                                                              
@@ -314,19 +315,28 @@ b_top25 %>%
     theme_minimal()+
     theme(plot.title = element_text(face = "bold"))
 
-# Step 9: word cloud
+# Step 9: word cloud in seperate chunk for fig cap 
+```
+
+```{r}
+   #| label: Part 2C word cloud
+   #| echo: true
+   #| fig-cap: "Word cloud of the top 25 sentiment words in Beyoncé's lyrics"
+   
+# Step 9: word cloud 
 set.seed(1000)
-## Source for Random Order below 
 b_top25 %>%
     with(wordcloud(word, n, max.words = 25, random.order = FALSE))
-
 ```
 
 Sources I used to help me complete this: 
 
-https://www.rdocumentation.org/packages/modelwordcloud/versions/0.1/topics/wordcloud 
+https://www.rdocumentation.org/packages/wordcloud/versions/2.6/topics/wordcloud 
 
 https://ggplot2.tidyverse.org/reference/geom_text.html
+
+https://quarto.org/docs/authoring/figures.html
+
 
 ## Part 2D
 ```{r}
@@ -360,8 +370,6 @@ ts_top25 %>%
     geom_col() +
     ## Adding counts at the end of each bar (geom_text, ggplot2 documentation)
     geom_text(aes(label = n), hjust = -0.2, size = 2) +
-    ## Extra space on the right so the longest bar's label isn't cut off
-    scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
     ## Setting labels
     labs(
         title = "Top 25 sentiment words in Taylor Swift's lyrics",
@@ -373,13 +381,22 @@ ts_top25 %>%
     theme_minimal()+
     theme(plot.title = element_text(face = "bold"))
 
-## Word cloud of the top 25 words
+# Step 9: word cloud in seperate chunk for fig cap 
+```
+
+```{r}
+   #| label: Part 2D word cloud
+   #| echo: true
+   #| fig-cap: "Word cloud of the top 25 sentiment words in TS's lyrics"
+
+# Step 9: word cloud 
 set.seed(1000)
 ts_top25 %>%
     with(wordcloud(word, n, max.words = 25, random.order = FALSE))
 ```
 
 Sources I used to help me complete this are same for Part 2C.
+
 ## Part 2E
 ```{r}
 #| label: Part 2E
